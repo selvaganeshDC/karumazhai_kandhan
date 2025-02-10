@@ -12,7 +12,7 @@ const app = express();
 app.use(express.urlencoded({extended : true}));
 app.use(express.json());
 app.use(cors({ 
-  origin: '*',
+    origin: ['https://karumazhaikandhan.deecodes.io', 'http://localhost:3000'],
   methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
   credentials: true, // Allow credentials if needed
 }));
