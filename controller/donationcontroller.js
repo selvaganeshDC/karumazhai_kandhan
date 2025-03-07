@@ -24,7 +24,7 @@ exports.submitDonation = async (req, res) => {
         let formattedPhone = phone.startsWith("91") ? phone : `91${phone}`;
 
         // WhatsApp message content
-        const message = `🙏 Karumalaikandhavelarthirukovil 🙏\n\nDear ${name},\n💖 Your donation of ₹${amount} means a lot to us! \n✨ Thank you for your generosity and support. 🌟`;
+        const message = `🙏 கருமலை கந்தவேலர் திருக்கோயில் 🙏\n\nஅன்பார்ந்த ${name},\n💖 உங்கள் ₹${amount} நன்கொடைக்கு மனமார்ந்த நன்றி! \n✨ உங்கள் தொண்டு மற்றும் ஆதரவுக்கு மிக்க நன்றி. 🌟`;
 
         // WhatsApp API URL
         const whatsappApiUrl = `http://wapi.msgpedia.com/wapp/api/send?apikey=de45773ebe7c48008aaad8b10951a6b0&mobile=${formattedPhone}&msg=${encodeURIComponent(message)}`;
