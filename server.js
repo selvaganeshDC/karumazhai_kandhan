@@ -41,6 +41,7 @@ app.get('/', (req, res) => {
 
 app.use("/api/donations", donationRoutes);
 app.use("/api/login", adminlogin);
+app.use("/api/register", adminlogin);
 // Listen on the port from the .env file
 const PORT = process.env.PORT || 7000;
 app.listen(PORT, () => {

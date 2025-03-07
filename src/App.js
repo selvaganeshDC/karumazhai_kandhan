@@ -1,20 +1,24 @@
-import React, { useState } from "react";
-import { BrowserRouter as Router, Routes, Route, useNavigate } from "react-router-dom";
-import {LoginOptions, AdminLogin} from "./components/login";
-import Admin from "./components/donationlist";
-import Donate from "./components/donate";
-
-const App = () => {
+import React from 'react';
+import { BrowserRouter as Router, Routes, Route, Navigate } from 'react-router-dom';
+import DonationForm from './components/DonationForm';
+import Login from './components/Login';
+import 'bootstrap/dist/css/bootstrap.min.css';
+import './App.css';
+import DonationList from './components/DonationList';
+import RegisterForm from './components/Register';
+function App() {
   return (
     <Router>
-      <Routes>
-        <Route path="/" element={<LoginOptions />} />
-        <Route path="/admin-login" element={<AdminLogin />} />
-        <Route path="/donationlist" element={<Admin />} />
-        <Route path="/donate" element={<Donate />} />
-      </Routes>
+      <div className="App">
+        <Routes>
+          <Route path="/" element={<DonationForm />} />
+          <Route path="/login" element={<Login />} />
+          <Route path="/donationlist" element={<DonationList />} />
+          <Route path='/register/admin' element={<RegisterForm />} />
+        </Routes>
+      </div>
     </Router>
   );
-};
+}
 
 export default App;

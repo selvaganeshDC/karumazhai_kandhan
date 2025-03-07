@@ -1,11 +1,13 @@
+const axios = require("axios");
 const Donation = require("../model/donationmodel");
+require("dotenv").config();
 
 exports.submitDonation = async (req, res) => {
     try {
-        const { name, amount, phone, place, address } = req.body;
+        const { name, amount, phone, email, address } = req.body;
 
         // Validate required fields
-        if (!name || !amount || !phone || !place) {
+        if (!name || !amount || !phone || !email) {
             return res.status(400).json({ success: false, message: "All required fields must be filled." });
         }
 
@@ -14,14 +16,28 @@ exports.submitDonation = async (req, res) => {
             name,
             amount,
             phone,
-            place,
+            email,
             address: address || null, // Address is optional
         });
 
+        // Format phone number: Ensure it includes country code (e.g., 91 for India)
+        let formattedPhone = phone.startsWith("91") ? phone : `91${phone}`;
+
+        // WhatsApp message content
+        const message = `🙏 Karumalaikandhavelarthirukovil 🙏\n\nDear ${name},\n💖 Your donation of ₹${amount} means a lot to us! \n✨ Thank you for your generosity and support. 🌟`;
+
+        // WhatsApp API URL
+        const whatsappApiUrl = `http://wapi.msgpedia.com/wapp/api/send?apikey=de45773ebe7c48008aaad8b10951a6b0&mobile=${formattedPhone}&msg=${encodeURIComponent(message)}`;
+
+        // Send WhatsApp message
+        const response = await axios.get(whatsappApiUrl);
+        console.log("WhatsApp API Response:", response.data);
+
         return res.status(201).json({ 
             success: true, 
-            message: "Thank you for your donation!", 
-            data: donation 
+            message: "Thank you for your donation! A confirmation has been sent via WhatsApp.", 
+            data: donation,
+            whatsappResponse: response.data  // Send response to frontend for debugging
         });
 
     } catch (error) {
@@ -29,6 +45,7 @@ exports.submitDonation = async (req, res) => {
         return res.status(500).json({ success: false, message: "Failed to submit donation." });
     }
 };
+
 
 exports.getAllDonations = async (req, res) => {
     try {

@@ -1,3 +1,3 @@
 // const baseurl = 'http://localhost:7000';
-const baseurl = 'https://karumazhaikandhan.deecodes.io';
+const baseurl = 'https://karumalaikandhavelarthirukoyil.boonnet.co';
 export default baseurl
