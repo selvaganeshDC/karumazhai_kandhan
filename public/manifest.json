@@ -35,13 +35,13 @@
   "screenshots": [
     {
       "src": "largescreen.png",
-      "sizes": "1910x944",
+      "sizes": "1080x1920",
       "type": "image/png",
       "form_factor": "wide"
     },
     {
       "src": "largescreen.png",
-      "sizes": "1910x944",
+      "sizes": "1080x1920",
       "type": "image/png",
       "form_factor": "narrow"
     }
