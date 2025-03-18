@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect  } from 'react';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import { Navbar, Container, Nav, Form, Button, Offcanvas, Alert } from 'react-bootstrap';
 import { FaHome, FaDonate, FaBars } from 'react-icons/fa';
@@ -9,6 +9,7 @@ import logo from '../assets/logo.jpeg';
 import logo2 from '../assets/karumalaikandhavelarthirukovil.God.png'
 import { useNavigate } from 'react-router-dom';
 import baseurl from '../apiservice/api';
+
 const DonationForm = () => {
   const [showSidebar, setShowSidebar] = useState(false);
   const [submitted, setSubmitted] = useState(false);
@@ -20,20 +21,26 @@ const DonationForm = () => {
   const [formData, setFormData] = useState({
     name: '',
     phone: '',
-    email: '',
     amount: ''
   });
 
   const handleCloseSidebar = () => setShowSidebar(false);
   const handleShowSidebar = () => setShowSidebar(true);
   const navigate = useNavigate();
+   useEffect(() => {
+      const adminData = JSON.parse(localStorage.getItem('adminData'));
+      if (!adminData) {
+        navigate('/');
+        return;
+      }
+    });
 
   const handleDonationClick = () => {
     const userData = localStorage.getItem("adminData");
     if (userData) {
       navigate("/donationlist");
     } else {
-      navigate("/login");
+      navigate("/");
     }
   };
 
@@ -41,7 +48,7 @@ const DonationForm = () => {
     const confirmLogout = window.confirm("Are you sure you want to logout?");
     if (confirmLogout) {
       localStorage.removeItem("adminData");
-      navigate("/login");
+      navigate("/");
     }
   };
 
@@ -77,11 +84,11 @@ const DonationForm = () => {
     }
     
     // Email validation
-    if (!formData.email) {
-      newErrors.email = 'Email is required';
-    } else if (!/\S+@\S+\.\S+/.test(formData.email)) {
-      newErrors.email = 'Email is invalid';
-    }
+    // if (!formData.email) {
+    //   newErrors.email = 'Email is required';
+    // } else if (!/\S+@\S+\.\S+/.test(formData.email)) {
+    //   newErrors.email = 'Email is invalid';
+    // }
     
     // Donation amount validation
     if (!formData.amount) {
@@ -113,7 +120,6 @@ const DonationForm = () => {
           setFormData({
             name: '',
             phone: '',
-            email: '',
             amount: ''
           });
         } else {
@@ -129,13 +135,13 @@ const DonationForm = () => {
   };
 
   const handleBack = () => {
-    navigate(-1); // Go back to previous page
+    navigate(-1); 
   };
 
   return (
     <div className="donation-app">
       {/* Navbar */}
-      <Navbar bg="white" expand={false} className="shadow-sm">
+      <Navbar bg="white" expand={false} className="shadow-sm nav-bar">
         <Container fluid>
           <Button
             variant="link"
@@ -144,7 +150,13 @@ const DonationForm = () => {
           >
             <FaBars size={20} />
           </Button>
-          <Navbar.Brand className="m-auto">New Donation</Navbar.Brand>
+          <Navbar.Brand className="me-0">New Donation</Navbar.Brand>
+          <Button
+            variant="link"
+            className="text-dark border-0 p-0 me-3"
+            onClick={handleShowSidebar}
+          >
+          </Button>
         </Container>
       </Navbar>
 
@@ -163,12 +175,17 @@ const DonationForm = () => {
         </Offcanvas.Header>
         <Offcanvas.Body className="p-0">
           <Nav className="flex-column">
-            <Nav.Link href="#" className="py-3 px-3" onClick={handleDonationClick}>
-              Donation
-            </Nav.Link>
+          <Nav.Link href="#" className="py-3 px-3 d-flex align-items-center" onClick={() => navigate('/home')}>
+                      <FaHome size={20} color="#0d6efd" className='me-2'/>
+                        Home
+                      </Nav.Link>
+                      <Nav.Link href="#" className="py-3 px-3 d-flex align-items-center" onClick={() => navigate('/donationlist')}>
+                      <FaDonate size={20} color="#0d6efd" className='me-2'/>
+                        Donation
+                      </Nav.Link>
           </Nav>
 
-          <div className="mt-auto position-absolute bottom-0 w-100">
+          {/* <div className="mt-auto position-absolute bottom-0 w-100"> */}
             {localStorage.getItem("adminData") ? (
               <Nav.Link
                 href="#"
@@ -189,7 +206,7 @@ const DonationForm = () => {
                 Login
               </Nav.Link>
             )}
-          </div>
+          {/* </div> */}
         </Offcanvas.Body>
       </Offcanvas>
 
@@ -260,7 +277,7 @@ const DonationForm = () => {
               </Form.Control.Feedback>
             </Form.Group>
 
-            <Form.Group className="text-left mb-3">
+            {/* <Form.Group className="text-left mb-3">
               <Form.Label className="text-left fw-bold">
                 Email <span className="text-danger">*</span>
               </Form.Label>
@@ -274,7 +291,7 @@ const DonationForm = () => {
               <Form.Control.Feedback type="invalid">
                 {errors.email}
               </Form.Control.Feedback>
-            </Form.Group>
+            </Form.Group> */}
 
             <Form.Group className="text-left mb-3">
               <Form.Label className="text-left fw-bold">
@@ -320,13 +337,13 @@ const DonationForm = () => {
         <Container>
           <div className="d-flex justify-content-between">
             <div className="text-center w-50 border-end">
-              <a href="#home" className="text-decoration-none text-dark d-flex flex-column align-items-center">
+              <a href="/home" className="text-decoration-none text-dark d-flex flex-column align-items-center">
                 <FaHome size={24} color="#2a7d8c" />
                 <span>Home</span>
               </a>
             </div>
             <div className="text-center w-50">
-              <a href="/login" className="text-decoration-none text-dark d-flex flex-column align-items-center">
+              <a href="/donationlist" className="text-decoration-none text-dark d-flex flex-column align-items-center">
                 <FaDonate size={24} color="#2a7d8c" />
                 <span>Donation</span>
               </a>

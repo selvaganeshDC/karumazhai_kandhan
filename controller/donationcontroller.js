@@ -4,10 +4,10 @@ require("dotenv").config();
 
 exports.submitDonation = async (req, res) => {
     try {
-        const { name, amount, phone, email, address } = req.body;
+        const { name, amount, phone } = req.body;
 
         // Validate required fields
-        if (!name || !amount || !phone || !email) {
+        if (!name || !amount || !phone ) {
             return res.status(400).json({ success: false, message: "All required fields must be filled." });
         }
 
@@ -16,8 +16,6 @@ exports.submitDonation = async (req, res) => {
             name,
             amount,
             phone,
-            email,
-            address: address || null, // Address is optional
         });
 
         // Format phone number: Ensure it includes country code (e.g., 91 for India)

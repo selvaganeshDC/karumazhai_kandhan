@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { Form, Button, Container, Row, Col, Image } from "react-bootstrap";
 import { useNavigate, Link } from "react-router-dom";
 import axios from "axios";
@@ -15,6 +15,12 @@ const LoginForm = () => {
   const [focusedInput, setFocusedInput] = useState(null);
   const [errors, setErrors] = useState({});
   const navigate = useNavigate();
+  useEffect(() => {
+    const adminData = localStorage.getItem("adminData");
+    if (adminData) {
+      navigate("/home");
+    }
+  }, [navigate]);
 
   const validateForm = () => {
     let formErrors = {};
@@ -57,7 +63,7 @@ const LoginForm = () => {
         localStorage.setItem("adminToken", response.data.token); // Assuming token is returned
         localStorage.setItem("adminData", JSON.stringify(response.data.user));
   
-        navigate("/");
+        navigate("/home");
       } else {
         setErrors({ apiError: "Invalid username or password." });
       }
@@ -160,7 +166,7 @@ const LoginForm = () => {
             </Form>
 
             {/* Alternative Back to Donation Link at Bottom */}
-            <div className="text-center mt-4">
+            {/* <div className="text-center mt-4">
               <Button 
                 variant="link" 
                 onClick={handleBackToDonation}
@@ -169,7 +175,7 @@ const LoginForm = () => {
               >
                 Return to Donation Page
               </Button>
-            </div>
+            </div> */}
           </Col>
         </Row>
       </Container>

@@ -24,7 +24,7 @@ const DonationList = () => {
   useEffect(() => {
     const adminData = JSON.parse(localStorage.getItem('adminData'));
     if (!adminData) {
-      navigate('/login');
+      navigate('/');
       return;
     }
 
@@ -41,20 +41,32 @@ const DonationList = () => {
 
     fetchDonations();
   }, [navigate]);
-
+  const handleLogout = () => {
+    const confirmLogout = window.confirm("Are you sure you want to logout?");
+    if (confirmLogout) {
+      localStorage.removeItem("adminData");
+      navigate("/");
+    }
+  };
   return (
     <>
       {/* Navbar */}
-      <Navbar bg="white" expand={false} className="shadow-sm">
+      <Navbar bg="white" expand={false} className="shadow-sm nav-bar">
         <Container fluid>
-          <Button 
-            variant="link" 
+          <Button
+            variant="link"
             className="text-dark border-0 p-0 me-3"
             onClick={handleShowSidebar}
           >
             <FaBars size={20} />
           </Button>
-          <Navbar.Brand className="m-auto">Donation</Navbar.Brand>
+          <Navbar.Brand className=" me-0">Donation</Navbar.Brand>
+          <Button
+            variant="link"
+            className="text-dark border-0 p-0 me-3"
+            onClick={handleShowSidebar}
+          >
+          </Button>
         </Container>
       </Navbar>
 
@@ -68,21 +80,42 @@ const DonationList = () => {
         </Offcanvas.Header>
         <Offcanvas.Body className="p-0">
           <Nav className="flex-column">
-            <Nav.Link href="#" className="py-3 px-3 " onClick={() => navigate('/donationlist')}>
+          <Nav.Link href="#" className="py-3 px-3 d-flex align-items-center" onClick={() => navigate('/home')}>
+            <FaHome size={20} color="#0d6efd" className='me-2'/>
+              Home
+            </Nav.Link>
+            <Nav.Link href="#" className="py-3 px-3 d-flex align-items-center" onClick={() => navigate('/donationlist')}>
+            <FaDonate size={20} color="#0d6efd" className='me-2'/>
               Donation
             </Nav.Link>
           </Nav>
-          <div className="mt-auto position-absolute bottom-0 w-100">
-            <Nav.Link href="/login" className="py-3 px-3 d-flex align-items-center" style={{ color: "#3e6344" }}>
-              <BiLogIn size={20} className="me-2" />
-              Login
-            </Nav.Link>
-          </div>
+          {/* <div className="mt-auto position-absolute bottom-0 w-100"> */}
+            {localStorage.getItem("adminData") ? (
+              <Nav.Link
+                href="#"
+                className="py-3 px-3 d-flex align-items-center"
+                style={{ color: "#d9534f" }}
+                onClick={handleLogout}
+              >
+                <BiLogIn size={20} className="me-2" />
+                Logout
+              </Nav.Link>
+            ) : (
+              <Nav.Link
+                href="/login"
+                className="py-3 px-3 d-flex align-items-center"
+                style={{ color: "#3e6344" }}
+              >
+                <BiLogIn size={20} className="me-2" />
+                Login
+              </Nav.Link>
+            )}
+          {/* </div> */}
         </Offcanvas.Body>
       </Offcanvas>
 
       {/* Donation List Section */}
-      <Container className="mt-4">
+      <Container className="donation-list">
         <h2 className="mb-3">Donation List</h2>
 
         {/* Loading Spinner */}
@@ -98,18 +131,18 @@ const DonationList = () => {
               <ListGroup.Item key={index} className="p-3 border-bottom d-flex justify-content-between align-items-center w-100">
                 <div className='d-flex justify-content-between w-100'>
                   <div className='row'>
-                  <h5 className="col-12 mb-1 text-left">{donor.name}</h5>
-                  <p className="col-12 mb-1 text-left">
-                    <a href={`mailto:${donor.email}`} className="text-primary">
-                      {donor.email? donor.email : 'email'}
-                    </a>
-                  </p>
+                    <h5 className="col-12 mb-1 text-left">{donor.name}</h5>
+                    {/* <p className="col-12 mb-1 text-left">
+                      <a href={`mailto:${donor.email}`} className="text-primary">
+                        {donor.email ? donor.email : 'email'}
+                      </a>
+                    </p> */}
                   </div>
                   <div className='row'>
-                  <p className="col-12 mb-1 text-end">{donor.phone}</p>
-                  <p className="col-12 mb-0 text-success fw-bold text-end">${donor.amount}</p>
+                    <p className="col-12 mb-1 text-end">{donor.phone}</p>
+                    <p className="col-12 mb-0 text-success fw-bold text-end">${donor.amount}</p>
                   </div>
-                 
+
                 </div>
               </ListGroup.Item>
             ))}
@@ -122,13 +155,13 @@ const DonationList = () => {
         <Container>
           <div className="d-flex justify-content-between">
             <div className="text-center w-50 border-end">
-              <a href="/login" className="text-decoration-none text-dark d-flex flex-column align-items-center">
+              <a href="/home" className="text-decoration-none text-dark d-flex flex-column align-items-center">
                 <FaHome size={24} color="#2a7d8c" />
                 <span>Home</span>
               </a>
             </div>
             <div className="text-center w-50">
-              <a href="/" className="text-decoration-none text-dark d-flex flex-column align-items-center">
+              <a href="/donationlist" className="text-decoration-none text-dark d-flex flex-column align-items-center">
                 <FaDonate size={24} color="#2a7d8c" />
                 <span>Donation</span>
               </a>
