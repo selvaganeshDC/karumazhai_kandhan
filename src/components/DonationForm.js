@@ -35,15 +35,6 @@ const DonationForm = () => {
       }
     });
 
-  const handleDonationClick = () => {
-    const userData = localStorage.getItem("adminData");
-    if (userData) {
-      navigate("/donationlist");
-    } else {
-      navigate("/");
-    }
-  };
-
   const handleLogout = () => {
     const confirmLogout = window.confirm("Are you sure you want to logout?");
     if (confirmLogout) {
