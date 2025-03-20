@@ -21,9 +21,10 @@ exports.submitDonation = async (req, res) => {
         // Format phone number: Ensure it includes country code (e.g., 91 for India)
         let formattedPhone = phone.startsWith("91") ? phone : `91${phone}`;
 
+        const currentDate = new Date().toLocaleDateString('en-IN');
         // WhatsApp message content
-        const message = `🙏 கருமலை கந்தவேலர் திருக்கோயில் 🙏\n\nஅன்பார்ந்த ${name},\n💖 உங்கள் ₹${amount} நன்கொடைக்கு மனமார்ந்த நன்றி! \n✨ உங்கள் தொண்டு மற்றும் ஆதரவுக்கு மிக்க நன்றி. 🌟`;
-
+        const message = `🙏 கருமலை கந்தவேலர் திருக்கோயில் 🙏\n\nஅன்பார்ந்த ${name},\n💖 உங்கள் ₹${amount} நன்கொடைக்கு மனமார்ந்த நன்றி! \n✨ உங்கள் தொண்டு மற்றும் ஆதரவுக்கு மிக்க நன்றி. 🌟 \n ${currentDate}`;
+         
         // WhatsApp API URL
         const whatsappApiUrl = `http://wapi.msgpedia.com/wapp/api/send?apikey=de45773ebe7c48008aaad8b10951a6b0&mobile=${formattedPhone}&msg=${encodeURIComponent(message)}`;
 
