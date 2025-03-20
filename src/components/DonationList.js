@@ -56,11 +56,11 @@ const DonationList = () => {
     const filtered = donors.filter(donor => {
       const donationDate = new Date(donor.createdAt);
       const filterDate = new Date(selectedDate);
-      
+
       // Set hours to 0 for comparison to match just the date portion
       donationDate.setHours(0, 0, 0, 0);
       filterDate.setHours(0, 0, 0, 0);
-      
+
       return donationDate.getTime() === filterDate.getTime();
     });
 
@@ -153,15 +153,15 @@ const DonationList = () => {
 
       {/* Date Filter Section */}
       {showFilters && (
-        <Container className="py-3 border-bottom" style={{marginTop:'70px'}}>
+        <Container className="py-3 border-bottom" style={{ marginTop: '70px' }}>
           <Form>
             <Row className="mb-3">
               <Col>
                 <Form.Group>
                   <Form.Label>Select Date</Form.Label>
-                  <Form.Control 
-                    type="date" 
-                    value={selectedDate} 
+                  <Form.Control
+                    type="date"
+                    value={selectedDate}
                     onChange={(e) => setSelectedDate(e.target.value)}
                   />
                 </Form.Group>
@@ -171,7 +171,7 @@ const DonationList = () => {
               <Button variant="secondary" size="sm" className="me-2" onClick={resetFilter}>
                 Reset
               </Button>
-              <Button variant="" size="sm" style={{backgroundColor: "#2a7d8c", color: "white"}} onClick={applyDateFilter}>
+              <Button variant="" size="sm" style={{ backgroundColor: "#2a7d8c", color: "white" }} onClick={applyDateFilter}>
                 Apply Filter
               </Button>
             </div>
@@ -221,7 +221,10 @@ const DonationList = () => {
                       </div>
                       <div className='row'>
                         <p className="col-12 mb-1 text-end">{donor.phone}</p>
-                        <p className="col-12 mb-0 text-success fw-bold text-end">${donor.amount}</p>
+                        <p className="col-12 mb-0 text-success fw-bold text-end">
+                          ₹{donor.amount.toLocaleString('en-IN')}
+                        </p>
+
                       </div>
                     </div>
                   </ListGroup.Item>
