@@ -1,12 +1,11 @@
 import React, { useState, useEffect } from "react";
 import { Form, Button, Container, Row, Col, Image } from "react-bootstrap";
-import { useNavigate, Link } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import axios from "axios";
 import "bootstrap/dist/css/bootstrap.min.css";
 import "../App.css"; // Ensure this file exists
 import bg from "../assets/logo.jpeg";
 import baseurl from '../apiservice/api';
-import { FaArrowLeft } from 'react-icons/fa';
 
 const LoginForm = () => {
   const [username, setUsername] = useState("");
@@ -79,10 +78,6 @@ const LoginForm = () => {
 
   const handleBlur = () => {
     setFocusedInput(null);
-  };
-
-  const handleBackToDonation = () => {
-    navigate("/"); // Navigate to the donation page
   };
 
   return (
@@ -164,18 +159,6 @@ const LoginForm = () => {
                 </Button>
               </div>
             </Form>
-
-            {/* Alternative Back to Donation Link at Bottom */}
-            {/* <div className="text-center mt-4">
-              <Button 
-                variant="link" 
-                onClick={handleBackToDonation}
-                className="text-decoration-none"
-                style={{ color: "#000" }}
-              >
-                Return to Donation Page
-              </Button>
-            </div> */}
           </Col>
         </Row>
       </Container>
